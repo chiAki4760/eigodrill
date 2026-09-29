@@ -28,6 +28,31 @@ window.DRILL_SETS = [
     { q:"もしもっと時間があれば", a:"If I had more time," },
     { q:"毎朝英語を勉強するのに", a:"I would study English every morning." },
     { q:"もしもっと時間があれば、毎朝英語を勉強するのに。", a:"If I had more time, I would study English every morning.", full:true }
-  ]}
+  ]},
+  { title:"例文：§366", items:[
+  { q:"何か起こったときのために", a:"In case anything happens," },
+  { q:"すぐに電話をくれ", a:"give me a call immediately;" },
+  { q:"何か起こったらすぐに電話をくれ", a:"In case anything happens, give me a call immediately;" },
+  { q:"急行するよ", a:"I'll rush over" },
+  { q:"君の居るところに着くために", a:"to get to where you are." },
+  { q:"君の居るところへ急行するよ", a:"I'll rush over to get to where you are." },
+  { q:"何か起こったらすぐに電話をくれ。君の居るところへ急行するよ。", a:"In case anything happens, give me a call immediately; I'll rush over to get to where you are.", full:true },
+  { q:"そら見たことか", a:"Serves you right." },
+  { q:"(私は)あなたに言った", a:"I told you" },
+  { q:"データのコピーを取っておくように", a:"to make a copy of the data" },
+  { q:"データのコピーを取っておくように言ったのに", a:"I told you to make a copy of the data" },
+  { q:"コンピュータの調子が悪くなるといけないので", a:"in case the computer went wrong." },
+  { q:"コンピュータの調子が悪くなるといけないので、データのコピーを取っておくように言ったのに", a:"I told you to make a copy of the data in case the computer went wrong." },
+  { q:"そら見たことか。コンピュータの調子が悪くなるといけないので、データのコピーを取っておくように言ったのに。", a:"Serves you right. I told you to make a copy of the data in case the computer went wrong.", full:true },
+  { q:"もうおいとましよう", a:"We'd better go now" },
+  { q:"余計に時間がかかるかもしれないから", a:"in case it takes more time" },
+  { q:"予定より", a:"than we expect" },
+  { q:"そこに着くのに", a:"to get there" },
+  { q:"そこに着くのに予定より余計に時間がかかるかもしれないから", a:"in case it takes more time than we expect to get there" },
+  { q:"交通渋滞のために", a:"because of the traffic jam." },
+  { q:"交通渋滞のためにそこに着くのに予定より余計に時間がかかるかもしれないから", a:"in case it takes more time than we expect to get there because of the traffic jam." },
+  { q:"交通渋滞のためにそこに着くのに予定より余計に時間がかかるかもしれないから、もうおいとましよう。", a:"We'd better go now in case it takes more time than we expect to get there because of the traffic jam.", full:true }
+]},
+
   // ▲ ここより上に追加
 ];
