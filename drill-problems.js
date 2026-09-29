@@ -53,6 +53,30 @@ window.DRILL_SETS = [
   { q:"交通渋滞のためにそこに着くのに予定より余計に時間がかかるかもしれないから", a:"in case it takes more time than we expect to get there because of the traffic jam." },
   { q:"交通渋滞のためにそこに着くのに予定より余計に時間がかかるかもしれないから、もうおいとましよう。", a:"We'd better go now in case it takes more time than we expect to get there because of the traffic jam.", full:true }
 ]},
+{ title:"例文：§370", items:[
+  { q:"20歳になったのだから", a:"Now that I'm twenty," },
+  { q:"(私は)酒が飲める", a:"I can drink" },
+  { q:"存分に", a:"to my satisfaction." },
+  { q:"存分に酒が飲める", a:"I can drink to my satisfaction." },
+  { q:"20歳になったのだから、存分に酒が飲めるぞ。", a:"Now that I'm twenty, I can drink to my satisfaction.", full:true },
+  { q:"テクノロジーが大変進歩したので", a:"Now that technology has improved a lot," },
+  { q:"以前は叶わないと思われていた", a:"which were considered (to be) impossible before" },
+  { q:"夢の多く", a:"many of the dreams" },
+  { q:"以前は叶わないと思われていた夢の多く", a:"many of the dreams which were considered (to be) impossible before" },
+  { q:"(それらは)今や実現可能である", a:"They can now be made possible." },
+  { q:"以前は叶わないと思われていた夢の多くも今や実現可能である", a:"many of the dreams which were considered (to be) impossible before can now be made possible." },
+  { q:"テクノロジーが大変進歩したので、以前は叶わないと思われていた夢の多くも今や実現可能である。", a:"Now that technology has improved a lot, many of the dreams which were considered (to be) impossible before can now be made possible.", full:true },
+  { q:"人は言うが", a:"People say," },
+  { q:"大学生になったのだから", a:"now that I have become a college student" },
+  { q:"辛い試験を乗り越えて", a:"getting over the hard exam," },
+  { q:"辛い試験を乗り越えて大学生になったのだから", a:"now that I have become a college student getting over the hard exam," },
+  { q:"リラックスすればよい", a:"I should relax." },
+  { q:"辛い試験を乗り越えて大学生になったのだから、リラックスすればよいと人は言う", a:"People say, now that I have become a college student getting over the hard exam, I should relax." },
+  { q:"怠惰に過ごしたくはない", a:"But I don't want to live an idle life" },
+  { q:"大学時代に", a:"in my college days." },
+  { q:"大学時代を怠惰に過ごしたくはない", a:"But I don't want to live an idle life in my college days." },
+  { q:"辛い試験を乗り越えて大学生になったのだから、リラックスすればよいと人は言うが、大学時代を怠惰に過ごしたくはない。", a:"People say, now that I have become a college student getting over the hard exam, I should relax. But I don't want to live an idle life in my college days.", full:true }
+]},
 
   // ▲ ここより上に追加
 ];
