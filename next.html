@@ -15,7 +15,9 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;line-height:1.6;overflow-x:hidden}
 .en,textarea,.mono{font-family:"Instrument Sans","Helvetica Neue",Arial,sans-serif}
 .wrap{max-width:560px;margin:0 auto;padding:16px 16px 60px;min-width:0}
-h1{font-size:22px;margin:8px 0 2px;letter-spacing:.02em}
+h1{font-size:26px;margin:0;letter-spacing:.02em;line-height:1.2}
+.brand{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin:10px 0 4px}
+.kick{font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--ac);border-left:2px solid var(--ac);padding-left:6px;line-height:1.3}
 h2{font-size:15px;margin:0 0 8px}
 .sub{color:var(--mut);font-size:13px;margin:0 0 14px}
 .field{margin:0 0 14px;min-width:0}
@@ -515,7 +517,7 @@ document.addEventListener('visibilitychange',function(){
 function opt(v,l,cur){return '<option value="'+esc(v)+'"'+(String(cur)===String(v)?' selected':'')+'>'+esc(l)+'</option>'}
 function modeNote(m){
   return m==='auto'?'問題を聞く → ピッと鳴ったら話す → 話し終えると自動で判定 → 次の問題へ。手がふさがっているときに。'
-    :m==='listen'?'答えずに、日本語 → 英語を繰り返し再生します。「ループ」をオンにすると流しっぱなしにできます。'
+    :m==='listen'?'問題音声→解答音声を繰り返し流します。「ループ」をオンにすると、ループ再生して練習できます。'
     :'問題を聞いてから、手入力かマイクで答えます。';
 }
 function setRowsHtml(sets,filt){
@@ -528,8 +530,8 @@ function setRowsHtml(sets,filt){
 }
 function guideHtml(open){
   return '<details class="guide" id="dGuide"'+(open?' open':'')+'><summary>使い方（初めての方は、ここを開いてください）</summary>'+
-    '<h3>遊び方</h3><ul><li>問題セットとモードを選んで「スタート」。</li><li>日本語が読み上げられます。英文は表示されないので、英語で声に出して答えます。</li><li>日本語は、意味のかたまりごとに出ます。短い部品から、だんだん長い文に積み上げていきます。</li></ul>'+
-    '<h3>3つのモード</h3><ul><li><b>通常</b>：手入力かマイクで答えて「判定する」。</li><li><b>連続</b>：ピッと鳴ったら話す。話し終えると自動で判定して次へ。</li><li><b>聞き流し</b>：日本語→英語を繰り返し流します。ループで流しっぱなしにできます。</li></ul>'+
+    '<h3>遊び方</h3><ul><li><b>チャンク</b>とは、意味のまとまりのことです（例：「私の父は」「毎日電車で」）。</li><li>問題セットとモードを選んで「スタート」。</li><li>日本語が読み上げられます。英文は表示されないので、英語で声に出して答えます。</li><li>問題文は、日本語の意味ごとに分けて出題され、徐々に積み重ねていき、全文まで出されます。</li></ul>'+
+    '<h3>3つのモード</h3><ul><li><b>通常</b>：手入力かマイクで答えて「判定する」。</li><li><b>連続</b>：ピッと鳴ったら話す。話し終えると自動で判定して次へ。</li><li><b>聞き流し</b>：問題音声→解答音声を繰り返し流します。ループ再生して練習できます。</li></ul>'+
     '<details><summary>くわしい説明</summary>'+
     '<h3>判定</h3><ul><li>大文字小文字と句読点は無視します。</li><li>I\'m と I am、20 と twenty のような言い方の違い、（ ）の省略は同じ意味として正解にします。</li><li>単語の言い換え（big と large など）は見分けられません。お手本と同じ単語で答えてください。</li></ul>'+
     '<h3>問題を増やすには</h3><ul><li>「問題を追加する」に、「日本語｜英語」を1行1問で書きます（行頭に ★ が全文）。</li><li>AIに分けてもらうときは、その中のボタンでプロンプトをコピーして使えます。英文を決めてある場合は「英文を固定」、日本語だけの場合は「日本語だけで作る」を選びます。</li></ul>'+
@@ -542,7 +544,7 @@ function showSetup(){
   var sets=allSets(),mode=cfg('mode');
   if(mode==='auto'&&!SR){mode='normal'}
   var nWeak=countBy(function(e){return isWeak(e)}),nUnseen=countBy(function(e){return !e});
-  var h='<h1>英作文 猛特訓</h1><p class="sub">日本語のかたまりを聞いて、英語で答える。</p>';
+  var h='<div class="brand"><span class="kick">日本語のチャンクを聞いて</span><h1>英作文 猛特訓</h1></div><p class="sub">英語で答える。</p>';
   if(pendingMsg){h+='<div class="info">'+esc(pendingMsg)+'</div>';pendingMsg=''}
   h+=guideHtml(false);
   if(!SR)h+='<div class="warn">この環境では音声認識が使えません。連続モードは使えません。通常モードでは、キーボードの音声入力で答えられます。Safari か Chrome でこのページを直接開くと、マイクが使えることがあります。</div>';
@@ -1031,3 +1033,4 @@ showSetup();
 </script>
 </body>
 </html>
+
