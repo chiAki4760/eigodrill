@@ -527,14 +527,15 @@ function setRowsHtml(sets,filt){
   return rows.join('')||'<p class="note" style="padding:8px 10px;margin:0">該当するセットがありません</p>';
 }
 function guideHtml(open){
-  return '<details class="guide" id="dGuide"'+(open?' open':'')+'><summary>使い方</summary>'+
+  return '<details class="guide" id="dGuide"'+(open?' open':'')+'><summary>使い方（初めての方は、ここを開いてください）</summary>'+
     '<h3>遊び方</h3><ul><li>問題セットとモードを選んで「スタート」。</li><li>日本語が読み上げられます。英文は表示されないので、英語で声に出して答えます。</li><li>日本語は、意味のかたまりごとに出ます。短い部品から、だんだん長い文に積み上げていきます。</li></ul>'+
     '<h3>3つのモード</h3><ul><li><b>通常</b>：手入力かマイクで答えて「判定する」。</li><li><b>連続</b>：ピッと鳴ったら話す。話し終えると自動で判定して次へ。</li><li><b>聞き流し</b>：日本語→英語を繰り返し流します。ループで流しっぱなしにできます。</li></ul>'+
+    '<details><summary>くわしい説明</summary>'+
     '<h3>判定</h3><ul><li>大文字小文字と句読点は無視します。</li><li>I\'m と I am、20 と twenty のような言い方の違い、（ ）の省略は同じ意味として正解にします。</li><li>単語の言い換え（big と large など）は見分けられません。お手本と同じ単語で答えてください。</li></ul>'+
     '<h3>問題を増やすには</h3><ul><li>「問題を追加する」に、「日本語｜英語」を1行1問で書きます（行頭に ★ が全文）。</li><li>AIに分けてもらうときは、その中のボタンでプロンプトをコピーして使えます。英文を決めてある場合は「英文を固定」、日本語だけの場合は「日本語だけで作る」を選びます。</li></ul>'+
     '<h3>苦手の記録</h3><ul><li>間違えた問題や時間切れの問題を記録します。「出題する問題」を「苦手だけ」にすると復習できます。</li><li>2回続けて正解すると、苦手から外れます。</li></ul>'+
     '<h3>マイクが使えないとき</h3><ul><li>Safari か Chrome で、このページを直接開いてください（アプリの中の画面では使えないことがあります）。</li><li>マイクの許可を求められたら「許可」を選びます。</li><li>それでも使えないときは、通常モードでキーボードの音声入力（マイクのマーク）を使います。</li></ul>'+
-    '<h3>記録の保存場所</h3><p>記録と追加した問題は、この端末のこのブラウザの中だけに保存されます。別の端末に移すときは、下の「バックアップ」を使ってください。</p></details>';
+    '<h3>記録の保存場所</h3><p>記録と追加した問題は、この端末のこのブラウザの中だけに保存されます。別の端末に移すときは、下の「バックアップ」を使ってください。ホーム画面に追加して使うと、記録が消えにくくなります。</p></details></details>';
 }
 function showSetup(){
   stopAll();lockOff();S=null;
@@ -543,7 +544,7 @@ function showSetup(){
   var nWeak=countBy(function(e){return isWeak(e)}),nUnseen=countBy(function(e){return !e});
   var h='<h1>英作文 猛特訓</h1><p class="sub">日本語のかたまりを聞いて、英語で答える。</p>';
   if(pendingMsg){h+='<div class="info">'+esc(pendingMsg)+'</div>';pendingMsg=''}
-  h+=guideHtml(!store.seenGuide);
+  h+=guideHtml(false);
   if(!SR)h+='<div class="warn">この環境では音声認識が使えません。連続モードは使えません。通常モードでは、キーボードの音声入力で答えられます。Safari か Chrome でこのページを直接開くと、マイクが使えることがあります。</div>';
 
   h+='<div class="field"><label>問題セット（チェックしたセットから出題）</label>'+
