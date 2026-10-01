@@ -3,13 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1f5c">
 <title>英作文 猛特訓</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+/* 色のテーマを先に当てる（ちらつき防止）。保存は別キー eisaku-drill-theme-v1 */
+(function(){try{var t=localStorage.getItem('eisaku-drill-theme-v1');if(t&&t!=='ai')document.documentElement.setAttribute('data-wa',t)}catch(e){}})();
+</script>
 <style>
 :root{--bg:#d9e1f2;--card:#fff;--fg:#0f1629;--mut:#5f6678;--line:#cfd7ea;--line2:#b3bdd6;--soft:#eef2fa;--ac:#2340C8;--acd:#1a32a3;--ok:#1a7f3c;--ng:#c62828;--warn:#a85f00;--okbg:#e7f4eb;--ngbg:#fcecec;--warnbg:#fff4e0;--acbg:#e9edfc;--navy:#0f1f5c;--navy-ink:#fff;--navy-soft:#a9b9ff;--r:4px;--h:46px}
 @media (prefers-color-scheme:dark){:root{--bg:#0c1430;--card:#121a30;--fg:#e9ecf4;--mut:#98a1b6;--line:#253052;--line2:#34416a;--soft:#0f1629;--ac:#7f97ff;--acd:#a3b4ff;--ok:#5fd087;--ng:#ff7a7a;--warn:#ffb648;--okbg:#12291b;--ngbg:#351819;--warnbg:#33270f;--acbg:#1a2344;--navy:#07102e;--navy-ink:#fff;--navy-soft:#b4c2ff}}
+/* ---- 色のテーマ（和の色）。html[data-wa] で切り替え ---- */
+html[data-wa="midori"]{--bg:#D8E6DC;--soft:#EEF5F0;--line:#C6DACC;--line2:#A9C4B1;--ac:#1E7B4C;--acd:#165F3A;--acbg:#E3F1E8;--navy:#123D2A;--navy-soft:#A6D6B6}
+html[data-wa="suou"]{--bg:#F0DDE3;--soft:#FAF0F3;--line:#E6CBD4;--line2:#D3AEBB;--ac:#B83A62;--acd:#952D4E;--acbg:#F8E4EB;--navy:#5C1A33;--navy-soft:#F2B3C6}
+html[data-wa="kaki"]{--bg:#F2DCD4;--soft:#FBF0EC;--line:#E8C8BD;--line2:#D6AB9C;--ac:#C23B1E;--acd:#9C2E16;--acbg:#FBE6DF;--navy:#561A10;--navy-soft:#F4A890}
+html[data-wa="mikan"]{--bg:#F6E3C6;--soft:#FDF5EA;--line:#EBD3AE;--line2:#D9B987;--ac:#C86A00;--acd:#A05400;--acbg:#FDEBD2;--navy:#4A2A04;--navy-soft:#F7BE6A}
+html[data-wa="sumi"]{--bg:#E2E0DB;--soft:#F3F2EF;--line:#D2CFC8;--line2:#B6B2A9;--ac:#454545;--acd:#2E2E2E;--acbg:#ECEAE5;--navy:#1E1E1E;--navy-soft:#BCB7AD}
+@media (prefers-color-scheme:dark){html[data-wa="midori"]{--bg:#0B1E15;--card:#11261B;--soft:#0C1A12;--line:#1F3D2C;--line2:#2D5440;--ac:#5FCB92;--acd:#8FDDB2;--acbg:#15301F;--navy:#071510;--navy-soft:#9ED9B5}html[data-wa="suou"]{--bg:#22101A;--card:#2C1520;--soft:#1C0D15;--line:#48243A;--line2:#5E3049;--ac:#F07FA2;--acd:#F7A9C1;--acbg:#3A1828;--navy:#170710;--navy-soft:#F4B8CB}html[data-wa="kaki"]{--bg:#22120D;--card:#2C1812;--soft:#1B0E0A;--line:#4A2A20;--line2:#603829;--ac:#FF8A66;--acd:#FFAD92;--acbg:#3A1D14;--navy:#160806;--navy-soft:#F7B29C}html[data-wa="mikan"]{--bg:#1F170A;--card:#29200F;--soft:#181107;--line:#4A3818;--line2:#5F4920;--ac:#FFB04A;--acd:#FFC778;--acbg:#3A2A0E;--navy:#140D02;--navy-soft:#F7C878}html[data-wa="sumi"]{--bg:#141414;--card:#1C1C1C;--soft:#101010;--line:#2E2E2E;--line2:#3C3C3C;--ac:#CFCBC2;--acd:#E6E3DC;--acbg:#262626;--navy:#0A0A0A;--navy-soft:#B8B3A9}}
+.head{position:relative}
+.head .gear{position:absolute;top:14px;right:12px;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:transparent;color:var(--navy-ink);display:grid;place-items:center;padding:0;cursor:pointer}
+.head .gear:active,.head .gear.on{background:rgba(255,255,255,.16)}
+.head .gear svg{width:18px;height:18px}
+.wapick{display:flex;gap:10px;align-items:flex-start;margin-top:14px;flex-wrap:wrap}
+.wapick button{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;padding:0;color:var(--navy-soft);font:inherit;font-size:11px;cursor:pointer;min-width:40px}
+.wapick i{display:block;width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.35);box-shadow:inset 0 0 0 9px var(--c1);background:var(--c2)}
+.wapick button.on i{border-color:#fff;outline:2px solid #fff;outline-offset:2px}
+.wapick button.on{color:var(--navy-ink);font-weight:700}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;font-feature-settings:"palt"}
@@ -235,7 +256,7 @@ details.guide[open]{padding-bottom:12px}
 (function(){
 'use strict';
 
-var VER='2.10';
+var VER='2.11';
 /* AIに渡す分割プロンプト（prompts/fixed.txt と prompts/free.txt から組み込み） */
 var PROMPTS={fixed:"あなたは、英作文・スピーキング教材の作成者です。\n私が渡す「日本語の文」と「英文」のペアを、積み上げ式の練習問題に分割してください。\n英文は、1文字も変えてはいけません。切って並べるだけです。\n\n■ 練習の仕組み\n日本語の意味のかたまりごとに短い部品を出題し、少しずつつなげて、最後に全文を英語で言えるようにします。\n\n■ 出力の形式\n・コードブロック1つだけを出力します。ブロックの外には、説明・前置き・あとがきを一切書きません。\n・1行が1問です。形は「日本語｜English」。区切りは全角の縦棒「｜」を1つだけ使います。日本語側にも英語側にも「｜」は入れません。\n・1行目は「# セット名」。入力の内容を表す短い日本語の題にします。\n・入力の1文ごとに、その積み上げの最後の行（全文の行）だけ、行頭に「★」を付けます。\n\n■ ルール\n1. 英文は書き換えない。単語、語順、大文字・小文字、句読点（, ; . など）、ハイフン、かっこも、原文のまま。文法や表現に疑問があっても直しません。\n2. 分ける単位は「日本語の意味のかたまり」です（主語のまとまり、動作、修飾する節、時・場所・理由・条件を表す句など）。英語の語順で並べます。日本語の語順と違うときは、その英語のかたまりが表す意味を、自然な日本語で書きます。\n3. 各行の英語は、全文の英語の「連続した一部分」にします。途中を飛ばしたり、順序を入れ替えたりしません（例外は、ルール6の主語の補いだけ）。\n4. 英語のかたまりは、だいたい2〜8語です。冠詞・前置詞・接続詞だけで始まる、または終わる切り方はしません。句読点は、そのかたまりの後ろに付いているものを、そのまま残します。\n5. 積み上げの並べ方：部品を左から順に出し、隣り合う部品を「つなげる行」で合体させ、最後に全文にします。\n　例（A, B, C, D は部品）：A → B → A+B → C → D → C+D → 全文\n　・つなげる行の英語は、隣り合う部品（またはつなげた行）を、そのままつなげたものです。\n　・つなげる行の日本語は、日本語の部品を自然につなげた文です（助詞・語尾は整えてよい）。\n　・最後の行は、入力の日本語の文と英文を、そのまま使います（★付き）。\n6. 主語の補い（部品の行だけ。つなげる行と全文の行には、絶対に補わない）：\n　動詞・助動詞から始まって主語がない部品は、先頭に主語（必要なら be動詞・助動詞）を1〜3語補い、単独で言える文にします。and / but で始まるときは、and / but を外して補います。\n　　例：is going to treat us → It is going to treat us\n　　例：and invited us to dinner → They invited us to dinner\n　補ったときは、日本語の先頭にも「(それは)」「(彼らは)」のように、かっこで主語を添えます。\n　補わないもの：so that / because / if / when / to不定詞 / 前置詞句で始まる部品、名詞句、命令文、動名詞・分詞（-ing, -ed）から始まる句。\n7. 英語に主語や目的語があるのに、その日本語の部品には出てこないとき（日本語で省略される「私は」など）は、日本語にかっこで「(私は)」のように添えます。\n8. 行数の目安（1文あたり、つなげる行と全文の行を含む）：英語10語以下→3〜5行／11〜20語→5〜8行／21語以上→7〜12行。\n9. 迷ったら、小さく自然なかたまりを選びます。\n\n■ 出力の前の確認（頭の中で行い、結果は書かない）\n□ 全行の英語が、全文の連続した一部分か（ルール6の補いを除く）\n□ つなげる行が、部品の単純なつなぎか\n□ 各行の日本語が、その行の英語の意味と合っているか\n□ 全文の行の英文が、入力の英文と1文字も違わないか\n□ 各文の最後の行に★が付いているか\n\n■ 例1\n（入力）\n経済的に苦しかったので、私達は一流ホテルで結婚披露宴を行う計画を断念せざるを得なかった。｜Our difficult economic situation made us give up the plan to have our wedding reception at a first-class hotel.\n\n（出力）\n```\n# 例文：計画の断念\n私達の経済的に苦しい状況が｜Our difficult economic situation\n(それが)私達に計画を断念させた｜It made us give up the plan\n経済的に苦しかったので、私達は計画を断念せざるを得なかった｜Our difficult economic situation made us give up the plan\n結婚披露宴を行う｜to have our wedding reception\n一流ホテルで｜at a first-class hotel.\n一流ホテルで結婚披露宴を行う｜to have our wedding reception at a first-class hotel.\n★経済的に苦しかったので、私達は一流ホテルで結婚披露宴を行う計画を断念せざるを得なかった。｜Our difficult economic situation made us give up the plan to have our wedding reception at a first-class hotel.\n```\n\n■ 例2\n（入力）\n少年はつまずいて転んだ拍子にうさぎ風船を手放し、それが満月の夜空に上って行くのを見つめた。｜The boy let the rabbit-shaped balloon go and watched it rise into the night sky lit by the full moon when he stumbled and fell.\n\n（出力）\n```\n# 例文：風船\n少年はうさぎ風船を手放し｜The boy let the rabbit-shaped balloon go\n(彼は)それが上って行くのを見つめた｜He watched it rise\n少年はうさぎ風船を手放し、それが上って行くのを見つめた｜The boy let the rabbit-shaped balloon go and watched it rise\n夜空へ｜into the night sky\n満月に照らされた｜lit by the full moon\n満月に照らされた夜空へ｜into the night sky lit by the full moon\n少年はうさぎ風船を手放し、それが満月の夜空に上って行くのを見つめた｜The boy let the rabbit-shaped balloon go and watched it rise into the night sky lit by the full moon\nつまずいて転んだ拍子に｜when he stumbled and fell.\n★少年はつまずいて転んだ拍子にうさぎ風船を手放し、それが満月の夜空に上って行くのを見つめた。｜The boy let the rabbit-shaped balloon go and watched it rise into the night sky lit by the full moon when he stumbled and fell.\n```\n\n■ 入力\n（ここから下を、あなたの文に書き換えてください。1行に1文、「日本語｜English」の形で書きます。複数の文を入れてもかまいません。）\n日本語の文。｜English sentence.\n",free:"あなたは、英作文・スピーキング教材の作成者です。\n私が渡す「日本語の文」を、正確な英文に訳し、その英文を積み上げ式の練習問題に分割してください。\n英文は、最初に1つ決めたら、そのあと1文字も変えてはいけません。\n\n■ 練習の仕組み\n日本語の意味のかたまりごとに短い部品を出題し、少しずつつなげて、最後に全文を英語で言えるようにします。\n\n■ 手順\n1. 日本語の文ごとに、英訳を1つ決める。（下の「英訳のルール」）\n2. その英文を、下の「分割のルール」で、積み上げ式の問題にする。\n3. コードブロック1つだけを出力する。\n\n■ 英訳のルール\n・日本語の意味を、落とさず、足さず、正確に訳します。\n・文法的に正しい、自然で標準的な英語にします。\n・特に指定がなければ、中学〜高校レベルの一般的な語彙と文型を使います。難しい語や、めずらしいイディオムは避けます。\n・日本語の1文は、原則として英語の1文に訳します（日本語の「。」の数を変えない）。\n・英訳が複数考えられるときは、最も標準的なものを1つだけ選びます。\n・関係詞節、分詞句、when / if / because などの節、to不定詞、前置詞句のように、かたまりに切りやすい構造を使ってかまいません。ただし、不自然にしてはいけません。\n・省略される主語（日本語の「私は」「彼らは」など）は、英語では自然に補います。\n\n■ 出力の形式\n・コードブロック1つだけを出力します。ブロックの外には、説明・前置き・あとがきを一切書きません。\n・1行が1問です。形は「日本語｜English」。区切りは全角の縦棒「｜」を1つだけ使います。日本語側にも英語側にも「｜」は入れません。\n・1行目は「# セット名」。入力の内容を表す短い日本語の題にします。\n・入力の1文ごとに、その積み上げの最後の行（全文の行）だけ、行頭に「★」を付けます。\n・全文の行の日本語は、入力の日本語を、そのまま使います。\n\n■ 分割のルール\n1. 決めた英文は、書き換えない。単語、語順、大文字・小文字、句読点（, ; . など）、ハイフン、かっこも、そのままです。\n2. 分ける単位は「日本語の意味のかたまり」です（主語のまとまり、動作、修飾する節、時・場所・理由・条件を表す句など）。英語の語順で並べます。日本語の語順と違うときは、その英語のかたまりが表す意味を、自然な日本語で書きます。\n3. 各行の英語は、全文の英語の「連続した一部分」にします。途中を飛ばしたり、順序を入れ替えたりしません（例外は、ルール6の主語の補いだけ）。\n4. 英語のかたまりは、だいたい2〜8語です。冠詞・前置詞・接続詞だけで始まる、または終わる切り方はしません。句読点は、そのかたまりの後ろに付いているものを、そのまま残します。\n5. 積み上げの並べ方：部品を左から順に出し、隣り合う部品を「つなげる行」で合体させ、最後に全文にします。\n　例（A, B, C, D は部品）：A → B → A+B → C → D → C+D → 全文\n　・つなげる行の英語は、隣り合う部品（またはつなげた行）を、そのままつなげたものです。\n　・つなげる行の日本語は、日本語の部品を自然につなげた文です（助詞・語尾は整えてよい）。\n6. 主語の補い（部品の行だけ。つなげる行と全文の行には、絶対に補わない）：\n　動詞・助動詞から始まって主語がない部品は、先頭に主語（必要なら be動詞・助動詞）を1〜3語補い、単独で言える文にします。and / but で始まるときは、and / but を外して補います。\n　　例：is going to treat us → It is going to treat us\n　　例：and invited us to dinner → They invited us to dinner\n　補ったときは、日本語の先頭にも「(それは)」「(彼らは)」のように、かっこで主語を添えます。\n　補わないもの：so that / because / if / when / to不定詞 / 前置詞句で始まる部品、名詞句、命令文、動名詞・分詞（-ing, -ed）から始まる句。\n7. 英語に主語や目的語があるのに、その日本語の部品には出てこないとき（日本語で省略される「私は」など）は、日本語にかっこで「(私は)」のように添えます。\n8. 行数の目安（1文あたり、つなげる行と全文の行を含む）：英語10語以下→3〜5行／11〜20語→5〜8行／21語以上→7〜12行。\n9. 迷ったら、小さく自然なかたまりを選びます。\n\n■ 出力の前の確認（頭の中で行い、結果は書かない）\n□ 英訳が、日本語の意味と合っていて、文法的に正しいか\n□ 全行の英語が、全文の連続した一部分か（ルール6の補いを除く）\n□ つなげる行が、部品の単純なつなぎか\n□ 各行の日本語が、その行の英語の意味と合っているか\n□ 全文の行の日本語が、入力の日本語と同じか\n□ 各文の最後の行に★が付いているか\n\n■ 例1\n（入力）\n経済的に苦しかったので、私達は一流ホテルで結婚披露宴を行う計画を断念せざるを得なかった。\n\n（出力）\n```\n# 例文：計画の断念\n私達の経済的に苦しい状況が｜Our difficult economic situation\n(それが)私達に計画を断念させた｜It made us give up the plan\n経済的に苦しかったので、私達は計画を断念せざるを得なかった｜Our difficult economic situation made us give up the plan\n結婚披露宴を行う｜to have our wedding reception\n一流ホテルで｜at a first-class hotel.\n一流ホテルで結婚披露宴を行う｜to have our wedding reception at a first-class hotel.\n★経済的に苦しかったので、私達は一流ホテルで結婚披露宴を行う計画を断念せざるを得なかった。｜Our difficult economic situation made us give up the plan to have our wedding reception at a first-class hotel.\n```\n\n■ 例2\n（入力）\nその工場を訪れ、自動車が造られているのを見て、私達はその能率の良さに感銘を受けた。\n\n（出力）\n```\n# 例文：工場見学\nその工場を訪れ｜Visiting the factory\n自動車が造られているのを見て｜seeing cars made,\nその工場を訪れ、自動車が造られているのを見て｜Visiting the factory and seeing cars made,\n私達は感銘を受けた｜we were impressed\nその能率の良さに｜by its efficiency.\nその能率の良さに感銘を受けた｜we were impressed by its efficiency.\n★その工場を訪れ、自動車が造られているのを見て、私達はその能率の良さに感銘を受けた。｜Visiting the factory and seeing cars made, we were impressed by its efficiency.\n```\n\n■ 希望（任意。不要なら、この3行は消してください）\nレベル：中学〜高校\n文体：ふつう（会話でも書き言葉でも使える）\n使いたい表現：（あれば書く）\n\n■ 入力\n（ここから下を、あなたの日本語の文に書き換えてください。1行に1文です。複数の文を入れてもかまいません。）\n日本語の文。\n"};
 
@@ -245,6 +266,35 @@ var LOG_KEY='eisaku-drill-log-v1';   // 苦手問題の記録（v2で追加）
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v);return true}catch(e){return false}}
 function lsDel(k){try{localStorage.removeItem(k)}catch(e){}}
+
+/* ===== 色のテーマ（和の色） ===== */
+var THEME_KEY='eisaku-drill-theme-v1';
+var THEMES=[['ai','藍','#0f1f5c','#2340C8'],['midori','常磐','#123D2A','#1E7B4C'],['suou','蘇芳','#5C1A33','#B83A62'],['kaki','柿','#561A10','#C23B1E'],['mikan','蜜柑','#4A2A04','#C86A00'],['sumi','墨','#1E1E1E','#454545']];
+var themeOpen=false;
+function curTheme(){var t=lsGet(THEME_KEY);for(var i=0;i<THEMES.length;i++)if(THEMES[i][0]===t)return t;return 'ai'}
+function applyTheme(t){
+  if(t==='ai')document.documentElement.removeAttribute('data-wa');else document.documentElement.setAttribute('data-wa',t);
+  var m=document.querySelector('meta[name=theme-color]');
+  if(m){var nv=getComputedStyle(document.documentElement).getPropertyValue('--navy').trim();if(nv)m.setAttribute('content',nv)}
+}
+function themeBtnHtml(){
+  var gear='<button class="gear'+(themeOpen?' on':'')+'" id="themeBtn" type="button" aria-label="色を変える" aria-expanded="'+themeOpen+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>';
+  if(!themeOpen)return gear;
+  var cur=curTheme();
+  return gear+'<div class="wapick" role="group" aria-label="アプリの色">'+THEMES.map(function(t){
+    return '<button type="button" class="thm'+(t[0]===cur?' on':'')+'" data-t="'+t[0]+'" aria-pressed="'+(t[0]===cur)+'"><i style="--c1:'+t[3]+';--c2:'+t[2]+'"></i>'+t[1]+'</button>'}).join('')+'</div>';
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('#themeBtn,.thm');if(!b)return;
+  if(b.id==='themeBtn'){themeOpen=!themeOpen}
+  else{var t=b.getAttribute('data-t');if(t==='ai')lsDel(THEME_KEY);else lsSet(THEME_KEY,t);applyTheme(t)}
+  var head=b.closest('.head');if(!head)return;
+  var old=head.querySelector('#themeBtn'),pk=head.querySelector('.wapick');
+  if(pk)pk.remove();
+  var tmp=document.createElement('div');tmp.innerHTML=themeBtnHtml();
+  old.replaceWith(tmp.firstChild);if(tmp.firstChild)head.appendChild(tmp.firstChild);
+});
+applyTheme(curTheme());
 
 //<pure
 /* ---- 英文の正規化：短縮形・数字・（ ）の省略を同じ意味として扱う ---- */
@@ -746,7 +796,7 @@ function showSetup(){
   var sets=allSets(),mode=cfg('mode');
   if(mode==='auto'&&!SR){mode='normal'}
   var nWeak=countBy(function(e){return isWeak(e)}),nUnseen=countBy(function(e){return !e});
-  var h='<div class="head"><div class="brand"><span class="kick">日本語のチャンクを聞いて</span><h1>英作文 猛特訓</h1></div><p class="sub">英語で答える。</p></div>';
+  var h='<div class="head"><div class="brand"><span class="kick">日本語のチャンクを聞いて</span><h1>英作文 猛特訓</h1></div><p class="sub">英語で答える。</p>'+themeBtnHtml()+'</div>';
   if(pendingMsg){h+='<div class="info">'+esc(pendingMsg)+'</div>';pendingMsg=''}
   h+=guideHtml(false);
   if(!SR)h+='<div class="warn">この環境では音声認識が使えません。連続モードは使えません。通常モードでは、キーボードの音声入力で答えられます。Safari か Chrome でこのページを直接開くと、マイクが使えることがあります。</div>';
