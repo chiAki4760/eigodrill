@@ -259,7 +259,7 @@ function remainMs(){return T.cb?Math.max(0,T.end-Date.now()):Infinity}
 function limitSec(q){
   var t=cfg('time');
   if(t==='none')return 0;
-  if(t.indexOf('auto')===0){var m=parseFloat(t.slice(4))||1;return Math.max(5,Math.round((3+wc(q.a)*1.2)*m))}
+  if(t.indexOf('auto')===0){var m=parseFloat(t.slice(4))||1;return Math.max(m<0.7?3:5,Math.round((3+wc(q.a)*1.2)*m))}
   return parseInt(t,10)||0;
 }
 
@@ -303,9 +303,13 @@ function showSetup(){
   h+='<div class="field"><label>モード</label><div class="seg"><button id="mNormal" class="'+(mode==='normal'?'on':'')+'">通常（手入力／マイク）</button><button id="mAuto" class="'+(mode==='auto'?'on':'')+'"'+(SR?'':' disabled')+'>連続（音声で自動）</button></div>'+
     '<p class="note" id="modeNote">'+(mode==='auto'?'問題を聞く → ピッと鳴ったら話す → 話し終えると自動で判定 → 次の問題へ。':'問題を聞いてから、時間内に手入力かマイクで答えます。')+'</p></div>';
   h+='<div class="field"><label>制限時間</label><select id="fTime">'+
-    opt('none','なし',cfg('time'))+opt('auto1','自動（語数に応じて・ふつう）',cfg('time'))+opt('auto0.7','自動（きびしめ）',cfg('time'))+opt('auto1.5','自動（ゆるめ）',cfg('time'))+
-    [5,8,10,15,20,30].map(function(s){return opt(String(s),'固定 '+s+'秒',cfg('time'))}).join('')+'</select>'+
-    '<p class="note">時間切れになると、そこまでの答えで判定します。英文は最後まで表示されません（ヒントのみ）。</p></div>';
+    opt('none','なし',cfg('time'))+
+    '<optgroup label="自動（語数に合わせる）">'+
+    [['auto2','とてもゆっくり'],['auto1.5','ゆっくり'],['auto1.2','ややゆっくり'],['auto1','ふつう'],['auto0.85','ややはやい'],['auto0.7','はやい'],['auto0.5','とてもはやい']]
+      .map(function(p){return opt(p[0],'自動・'+p[1],cfg('time'))}).join('')+'</optgroup>'+
+    '<optgroup label="固定">'+
+    [3,5,8,10,15,20,30,45,60].map(function(s){return opt(String(s),'固定 '+s+'秒',cfg('time'))}).join('')+'</optgroup></select>'+
+    '<p class="note">「自動」は英文の長さに合わせて時間が変わります。はやいほど短い時間で答えます。時間切れになると、そこまでの答えで判定します（英文はヒントのみ）。</p></div>';
   h+='<label class="chk"><input type="checkbox" id="fReadJa"'+(cfg('readJa')?' checked':'')+'>日本語の問題を読み上げる</label>';
   h+='<label class="chk"><input type="checkbox" id="fReadEn"'+(cfg('readEn')?' checked':'')+'>答え合わせのあとにお手本の英文を読み上げる</label>';
   h+='<div class="field'+(mode==='auto'?'':' hidden')+'" id="pauseField" style="margin-top:8px"><label>結果を見せる時間（連続モード）</label><select id="fPause">'+
