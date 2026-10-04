@@ -28,6 +28,7 @@ textarea{resize:vertical;line-height:1.5}
 .btn.pri{background:var(--ac);border-color:var(--ac);color:#fff}
 .btn.sm{min-height:36px;padding:6px 10px;font-size:13px;border-color:var(--line)}
 .btn.big{width:100%;font-size:17px;min-height:52px;font-weight:700}
+.linkbtn{display:block;margin:10px auto 0;padding:6px 10px;background:none;border:0;color:var(--mut);font:inherit;font-size:14px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .btn.rec{border-color:var(--ng);color:var(--ng)}
 .seg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--fg);border-radius:3px;overflow:hidden}
 .seg button{font:inherit;font-size:14px;padding:10px 6px;border:0;background:var(--bg);color:var(--fg);cursor:pointer;min-height:44px}
@@ -155,7 +156,7 @@ var store={custom:[],settings:{}};
 var DEF={set:'all',order:'seq',mode:'normal',time:'auto1',readJa:true,readEn:true,pause:3};
 (function(){
   var raw=lsGet(LS_KEY);
-  if(raw){try{var o=JSON.parse(raw);if(o&&typeof o==='object'){store.custom=Array.isArray(o.custom)?o.custom:[];store.settings=o.settings||{}}}catch(e){}}
+  if(raw){try{var o=JSON.parse(raw);if(o&&typeof o==='object'){store.custom=Array.isArray(o.custom)?o.custom:[];store.settings=o.settings||{};if(o.resume&&typeof o.resume==='object'&&!Array.isArray(o.resume))store.resume=o.resume}}catch(e){}}
 })();
 function save(){lsSet(LS_KEY,JSON.stringify(store))}
 function cfg(k){var v=store.settings[k];return v===undefined?DEF[k]:v}
@@ -177,6 +178,22 @@ function buildQueue(){
   if(ord==='shuffle')q=shuffle(q);
   return q;
 }
+/* ---- 続きから：「順番どおり」のとき、選んでいるセットごとに次の問題を覚えておく ---- */
+function qkey(x){return x.q+'\u0001'+x.a}
+function resumeSlot(){return cfg('order')==='seq'?'s:'+cfg('set'):null}
+function resumeAt(q){
+  var slot=resumeSlot(),r=slot&&store.resume&&store.resume[slot];
+  if(!r||!q.length)return 0;
+  for(var i=0;i<q.length;i++)if(qkey(q[i])===r.k)return i;
+  return (r.i>0&&r.i<q.length)?r.i:0;
+}
+function resumeSave(){
+  if(!S||!S.slot)return;
+  if(!store.resume)store.resume={};
+  if(S.i>0)store.resume[S.slot]={k:qkey(cur()),i:S.i};else delete store.resume[S.slot];
+  save();
+}
+function resumeClear(){if(S&&S.slot&&store.resume&&store.resume[S.slot]){delete store.resume[S.slot];save()}}
 
 /* ===== 音声（読み上げ／認識） ===== */
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -293,7 +310,7 @@ function armButton(btn,label,action){
 function opt(v,l,cur){return '<option value="'+esc(v)+'"'+(String(cur)===String(v)?' selected':'')+'>'+esc(l)+'</option>'}
 function showSetup(){
   stopAll();S=null;
-  var sets=allSets(),n=buildQueue().length,mode=cfg('mode');
+  var sets=allSets(),q0=buildQueue(),n=q0.length,at=resumeAt(q0),mode=cfg('mode');
   if(mode==='auto'&&!SR)mode='normal';
   var h='<h1>英作文 猛特訓</h1><p class="sub">日本語のかたまりを聞いて、英語で答える。</p>';
   if(!SR)h+='<div class="warn">この環境では音声認識が使えません。連続モード（音声）を使うには、Chrome か Safari でこのページを直接開いてください。</div>';
@@ -314,23 +331,28 @@ function showSetup(){
   h+='<label class="chk"><input type="checkbox" id="fReadEn"'+(cfg('readEn')?' checked':'')+'>答え合わせのあとにお手本の英文を読み上げる</label>';
   h+='<div class="field'+(mode==='auto'?'':' hidden')+'" id="pauseField" style="margin-top:8px"><label>結果を見せる時間（連続モード）</label><select id="fPause">'+
     [2,3,5,8].map(function(s){return opt(String(s),s+'秒',cfg('pause'))}).join('')+'</select></div>';
-  h+='<button id="go" class="btn pri big"'+(n?'':' disabled')+'>スタート（'+n+'問）</button>';
+  h+='<button id="go" class="btn pri big"'+(n?'':' disabled')+'>スタート（'+(at?(at+1)+'問目から・残り'+(n-at)+'問':n+'問')+'）</button>'+
+    (at?'<button id="goTop" class="linkbtn">最初からやり直す</button>':'');
   h+=addSection(sets);
   app.innerHTML=h;
   $('#fSet').onchange=function(){setCfg('set',this.value);showSetup()};
-  $('#fOrder').onchange=function(){setCfg('order',this.value)};
+  $('#fOrder').onchange=function(){setCfg('order',this.value);showSetup()};
   $('#fTime').onchange=function(){setCfg('time',this.value)};
   $('#fReadJa').onchange=function(){setCfg('readJa',this.checked)};
   $('#fReadEn').onchange=function(){setCfg('readEn',this.checked)};
   $('#fPause').onchange=function(){setCfg('pause',parseInt(this.value,10))};
   $('#mNormal').onclick=function(){setCfg('mode','normal');showSetup()};
   $('#mAuto').onclick=function(){if(SR){setCfg('mode','auto');showSetup()}};
-  $('#go').onclick=function(){
+  function goStart(fromTop){
     // 音声の再生・録音は、タップ操作の直後に始めないと使えない端末があるため、ここで開始する
     var q=buildQueue();if(!q.length)return;
     try{if(hasTTS){var u=new SpeechSynthesisUtterance(' ');u.volume=0;window.speechSynthesis.speak(u)}}catch(e){}
-    startQuiz(q);
-  };
+    var slot=resumeSlot();
+    if(fromTop&&slot&&store.resume&&store.resume[slot]){delete store.resume[slot];save()}
+    startQuiz(q,{slot:slot,at:fromTop?0:resumeAt(q)});
+  }
+  $('#go').onclick=function(){goStart(false)};
+  if($('#goTop'))$('#goTop').onclick=function(){goStart(true)};
   bindAdd();
 }
 function addSection(sets){
@@ -382,9 +404,10 @@ function bindAdd(){
 
 /* ===== 出題 ===== */
 function cur(){return S.queue[S.i]}
-function startQuiz(queue){
-  stopAll();
-  S={queue:queue,i:0,res:[],done:false,began:false,begin:null,hints:0};
+function startQuiz(queue,opt){
+  stopAll();opt=opt||{};
+  var at=(opt.at>0&&opt.at<queue.length)?opt.at:0;
+  S={queue:queue,i:at,slot:opt.slot||null,res:[],done:false,began:false,begin:null,hints:0};
   renderQuiz();startQuestion();
 }
 function renderQuiz(){
@@ -418,7 +441,7 @@ function startQuestion(){
   $('#pnum').textContent=(S.i+1)+' / '+S.queue.length;
   $('#pbar').style.width=(100*S.i/S.queue.length)+'%';
   $('#tags').innerHTML='<span class="tag no">No.'+(S.i+1)+'</span>'+(q.full?'<span class="tag full">全文</span>':'')+'<span class="tag">'+esc(q.set)+'</span>';
-  $('#qjp').textContent=q.q;
+  $('#qjp').textContent=q.q;resumeSave();
   $('#ans').value='';$('#hint').textContent='';
   $('#answerArea').classList.remove('hidden');
   $('#bJa').classList.toggle('hidden',auto);
@@ -524,7 +547,7 @@ function finishQ(id,text,reason){
 }
 function next(){
   stopAll();S.i++;
-  if(S.i>=S.queue.length)showResult();else startQuestion();
+  if(S.i>=S.queue.length){resumeClear();showResult()}else startQuestion();
 }
 function quit(){
   stopAll();
